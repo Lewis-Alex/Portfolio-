@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lewi Alex | Creative Developer & Founder</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" sizes="192x192" href="logo.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #050810; --card: #0f172a; --text: #ffffff;
+            --accent: #2563EB; --glass: rgba(255, 255, 255, 0.03);
+            --hero-gradient: radial-gradient(circle at top right, #1e293b, #050810);
+        }
+
+        [data-theme="light"] {
+            --bg: #e2e8f0; --card: #ffffff; --text: #0f172a; 
+            --accent: #2563EB; --glass: rgba(0, 0, 0, 0.05);
+            --hero-gradient: linear-gradient(135deg, #cbd5e1 0%, #e2e8f0 100%);
+        }
+
+        body {
+            background: var(--bg); background-image: var(--hero-gradient);
+            color: var(--text); font-family: 'Inter', sans-serif;
+            margin: 0; transition: all 0.5s ease; overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        /* --- PRELOADER STYLE --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050810; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .loader-content { text-align: center; }
+        .loader-logo { width: 60px; height: auto; animation: logo-entrance 1.5s forwards; opacity: 0; }
+        .loader-name { font-family: 'Montserrat'; font-size: 1.5rem; letter-spacing: 15px; margin-top: 20px; opacity: 0; animation: name-reveal 2s forwards 0.5s; }
+        .loader-status { font-size: 0.7rem; letter-spacing: 3px; opacity: 0.5; margin-top: 10px; }
+        @keyframes logo-entrance { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
+        @keyframes name-reveal { 0% { letter-spacing: 15px; opacity: 0; } 100% { letter-spacing: 4px; opacity: 1; } }
+        .loader-hidden { opacity: 0 !important; pointer-events: none; }
+
+        /* --- WATERMARK --- */
+        body::before {
+            content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40vw; height: 40vw; background-image: url('logo.png'); 
+            background-repeat: no-repeat; background-position: center; background-size: contain;
+            opacity: 0.04; pointer-events: none; z-index: 0;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 2000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; box-sizing: border-box;
+            background: rgba(var(--bg), 0.7); backdrop-filter: blur(20px);
+        }
+
+        .theme-toggle-btn {
+            background: var(--accent); color: white; border: none;
+            width: 50px; height: 50px; border-radius: 15px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3); transition: 0.3s;
+        }
+
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; position: relative; z-index: 1; }
+        h1 { font-family: 'Montserrat'; font-size: clamp(3rem, 10vw, 6rem); margin: 0; text-transform: uppercase; letter-spacing: -2px; }
+
+        .portfolio-container { width: 100%; overflow-x: auto; scrollbar-width: none; padding: 50px 0; cursor: grab; -webkit-overflow-scrolling: touch; position: relative; z-index: 1; }
+        .portfolio-container::-webkit-scrollbar { display: none; }
+        .portfolio-flex-track { display: flex; padding: 0 5%; gap: 30px; }
+        
+        .initial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; min-width: 90vw; }
+        .project-card { 
+            min-width: 350px; background: var(--card); border-radius: 30px; 
+            overflow: hidden; border: 1px solid var(--glass); display: flex; 
+            flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .project-card:hover { transform: translateY(-10px); }
+        .initial-grid .project-card { min-width: unset; }
+        
+        .project-img { height: 250px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white !important; text-align: center; }
+        .p-text { padding: 25px; }
+
+        .showroom { padding: 100px 10%; position: relative; z-index: 1; }
+        .showroom-item { margin-bottom: 150px; }
+        .showroom-img { height: 450px; border-radius: 40px; margin-bottom: 30px; background: var(--card); border: 1px solid var(--glass); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px rgba(0,0,0,0.12); color: white !important; }
+        
+        .deep-dive-list { list-style: none; padding: 0; margin-top: 25px; }
+        .deep-dive-list li { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-weight: 500; }
+        .deep-dive-list i { color: var(--accent); font-size: 1.2rem; }
+
+        .stats-bar { background: var(--accent); color: white !important; padding: 100px 10%; display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 40px; position: relative; z-index: 1; }
+        .stat-number { font-size: 4rem; font-family: 'Montserrat'; font-weight: 900; display: block; color: white !important; }
+        .stat-label { text-transform: uppercase; letter-spacing: 2px; font-weight: 700; opacity: 0.8; color: white !important; }
+
+        .contact-card { background: var(--card); max-width: 800px; margin: 50px auto; border-radius: 40px; padding: 60px; text-align: center; border: 1px solid var(--glass); position: relative; z-index: 1; }
+        .social-hub { display: flex; justify-content: center; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+        .social-hub a { width: 70px; height: 70px; background: var(--bg); border: 1px solid var(--glass); border-radius: 22px; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 1.8rem; text-decoration: none; transition: 0.4s; }
+        .social-hub a:hover { background: var(--accent); color: white !important; transform: rotate(10deg) scale(1.1); }
+
+        footer { text-align: center; padding: 50px; opacity: 0.6; font-weight: 600; position: relative; z-index: 1; }
+        .reveal { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) { .initial-grid { min-width: 180vw; } .showroom-img { height: 320px; } }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div id="loader">
+        <div class="loader-content">
+            <img src="logo.png" alt="Leon Logo" class="loader-logo">
+            <h1 class="loader-name">LEWI <span style="color: var(--accent);">ALEX</span></h1>
+            <div class="loader-status">CREATIVE TECHNOLOGIST</div>
+        </div>
+    </div>
+
+    <nav>
+        <div style="font-family: 'Montserrat'; font-weight: 900; font-size: 1.4rem; letter-spacing: -1px;">LEWI<span style="color: var(--accent);">ALEX</span></div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal">LEWI <span style="color: var(--accent);">ALEX</span></h1>
+        <p class="reveal" style="font-size: 1.2rem; opacity: 0.8;">Creative Technologist & Founder of Leon Creatives</p>
+    </section>
+
+    <section id="portfolio">
+        <h2 style="text-align: center; font-family: 'Montserrat'; font-size: 2.5rem; margin-bottom: 40px;">SELECTED WORKS</h2>
+        <div class="portfolio-container" id="scrollContainer">
+            <div class="portfolio-flex-track">
+                <div class="initial-grid">
+                    <div class="project-card reveal"><div class="project-img" style="background: linear-gradient(45deg, #002147, #2563EB);">AWASH BANK</div><div class="p-text"><h3>Fintech UI</h3><p>Banking Redefined</p></div></div>
+                    <div class="project-card reveal"><div class="project-img" style="background: linear-gradient(45deg, #e61c24, #1e293b);">SAFARICOM</div><div class="p-text"><h3>Motion</h3><p>5G Digital Hub</p></div></div>
+                    <div class="project-card reveal"><div class="project-img" style="background: linear-gradient(45deg, #283618, #606c38);">AIRLINES</div><div class="p-text"><h3>Branding</h3><p>Global Identity</p></div></div>
+                    <div class="project-card reveal"><div class="project-img" style="background: linear-gradient(45deg, #4b2c20, #8d5524);">COFFEE CO.</div><div class="p-text"><h3>E-Comm</h3><p>B2B Portal</p></div></div>
+                </div>
+                
+                <div class="project-card reveal"><div class="project-img" style="background: #1e293b;">PROJECT 05</div><div class="p-text"><h3>Visuals</h3></div></div>
+                <div class="project-card reveal"><div class="project-img" style="background: #334155;">PROJECT 06</div><div class="p-text"><h3>Strategy</h3></div></div>
+
+                <div class="project-card reveal" style="background: var(--accent); color: white !important; cursor: pointer;" 
+                     onclick="window.open('https://URL_OF_YOUR_PROJECT_SITE.com', '_blank')">
+                    <div class="project-img" style="flex-direction: column; height: 100%; justify-content: center;">
+                        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 2.5rem; margin-bottom: 15px;"></i>
+                        <span style="font-size: 1.5rem; letter-spacing: 2px;">SEE MORE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showroom">
+        <h2 style="text-align: center; font-family: 'Montserrat'; font-size: 2.5rem; margin-bottom: 60px;">DEEP DIVE</h2>
+        <div class="showroom-item reveal">
+            <div class="showroom-img" style="background: linear-gradient(135deg, #0f172a, #2563EB);">[ CASE: AWASH ]</div>
+            <h3 style="font-size: 2.2rem; font-family: 'Montserrat';">Digital Banking Evolution</h3>
+            <ul class="deep-dive-list">
+                <li><i class="fa-solid fa-circle-check"></i> Enterprise-grade security architecture</li>
+                <li><i class="fa-solid fa-circle-check"></i> High-conversion mobile user flows</li>
+                <li><i class="fa-solid fa-circle-check"></i> 2026 Modern Design Standards</li>
+            </ul>
+        </div>
+        <div class="showroom-item reveal">
+            <div class="showroom-img" style="background: linear-gradient(135deg, #1e293b, #e61c24);">[ CASE: SAFARICOM ]</div>
+            <h3 style="font-size: 2.2rem; font-family: 'Montserrat';">Nationwide 5G Rollout</h3>
+            <ul class="deep-dive-list">
+                <li><i class="fa-solid fa-bolt"></i> Dynamic Kinetic Typography</li>
+                <li><i class="fa-solid fa-bolt"></i> Multi-channel Content Distribution</li>
+                <li><i class="fa-solid fa-bolt"></i> 10M+ Strategic Impressions</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="stats-bar reveal" id="statsSection">
+        <div><span class="stat-number" data-target="12">0</span><span class="stat-label">Projects</span></div>
+        <div><span class="stat-number" data-target="100">0</span><span class="stat-label">% Success</span></div>
+        <div><span class="stat-number" data-target="2026">0</span><span class="stat-label">Innovation</span></div>
+    </section>
+
+    <section id="contact" style="padding: 100px 5%;">
+        <div class="contact-card reveal">
+            <img src="logo.png" alt="Leon Logo" style="height: 60px; margin-bottom: 20px; opacity: 0.8;">
+            <h2 style="font-family: 'Montserrat'; font-size: 2.5rem;">LET'S WORK</h2>
+            <div class="social-hub">
+                <a href="tel:+251920552779"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://t.me/yourusername"><i class="fab fa-telegram"></i></a>
+                <a href="https://wa.me/251920552779"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/yourusername"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:your@email.com"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>&copy; 2026 LEWI ALEX &bull; LEON CREATIVES</footer>
+
+    <script>
+        // LOADER SCRIPT
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("loader");
+            setTimeout(() => { loader.classList.add("loader-hidden"); }, 2500);
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            document.querySelector('#themeBtn i').className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        }
+
+        const container = document.getElementById('scrollContainer');
+        let isPaused = false;
+        setInterval(() => {
+            if (!isPaused) {
+                container.scrollLeft += 0.8;
+                if (container.scrollLeft >= (container.scrollWidth - container.clientWidth)) container.scrollLeft = 0;
+            }
+        }, 30);
+        container.addEventListener('mousedown', () => isPaused = true);
+        container.addEventListener('mouseup', () => isPaused = false);
+        container.addEventListener('touchstart', () => isPaused = true);
+        container.addEventListener('touchend', () => isPaused = false);
+
+        const runCounter = (el) => {
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const update = () => {
+                const inc = target / 60;
+                if (count < target) {
+                    count += inc;
+                    el.innerText = Math.ceil(count);
+                    setTimeout(update, 25);
+                } else {
+                    el.innerText = target + (target === 12 ? "+" : "");
+                }
+            };
+            update();
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'statsSection') {
+                        entry.target.querySelectorAll('.stat-number').forEach(num => {
+                            num.innerText = "0"; runCounter(num);
+                        });
+                    }
+                } else {
+                    entry.target.classList.remove('active');
+                    if (entry.target.id === 'statsSection') {
+                        entry.target.querySelectorAll('.stat-number').forEach(num => num.innerText = "0");
+                    }
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('.reveal, #statsSection').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

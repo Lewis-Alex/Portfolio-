@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lewi Alex | Creative Developer & Founder</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #050810; --card: #0f172a; --text: #ffffff;
+            --accent: #2563EB; --glass: rgba(255, 255, 255, 0.03);
+            --elite-gap: 350px; 
+            --intro-gap: 25px;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc; --card: #ffffff; --text: #0f172a; 
+            --accent: #2563EB; --glass: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif;
+            margin: 0; transition: all 0.5s ease; overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        /* --- KINETIC SKILL LOADER --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050810; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: all 0.8s cubic-bezier(1, 0, 0, 1);
+        }
+        .loader-wrapper { position: relative; width: 220px; height: 220px; display: flex; justify-content: center; align-items: center; }
+        .center-logo { width: 65px; height: auto; z-index: 10; animation: logo-vibe 2s infinite ease-in-out; }
+        .orbit-ring { position: absolute; width: 100%; height: 100%; animation: kinetic-rotate 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .skill-icon { 
+            position: absolute; width: 45px; height: 45px; background: #0f172a; border: 1.5px solid var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            color: var(--accent); font-size: 1.2rem; box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+            animation: kinetic-counter 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; 
+        }
+        .s1 { top: -5px; left: 50%; transform: translateX(-50%); }
+        .s2 { bottom: -5px; left: 50%; transform: translateX(-50%); }
+        .s3 { left: -5px; top: 50%; transform: translateY(-50%); }
+        .s4 { right: -5px; top: 50%; transform: translateY(-50%); }
+
+        @keyframes kinetic-rotate { 0% { transform: rotate(0deg); } 80% { transform: rotate(380deg); } 100% { transform: rotate(360deg); } }
+        @keyframes kinetic-counter { 0% { transform: rotate(0deg) scale(1); } 50% { scale: 1.2; } 100% { transform: rotate(-360deg) scale(1); } }
+        @keyframes logo-vibe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); filter: brightness(1.2); } }
+        .loader-hidden { opacity: 0 !important; transform: scale(1.5); pointer-events: none; }
+
+        /* --- WATERMARK --- */
+        body::before {
+            content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40vw; height: 40vw; background-image: url('logo.png'); 
+            background-repeat: no-repeat; background-position: center; background-size: contain;
+            opacity: 0.03; pointer-events: none; z-index: 0;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 2000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; box-sizing: border-box;
+            background: rgba(5, 8, 16, 0.7); backdrop-filter: blur(20px);
+        }
+        [data-theme="light"] nav { background: rgba(255, 255, 255, 0.75); }
+
+        .nav-logo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.3rem; }
+        .logo-accent { color: var(--accent); text-shadow: 0 0 8px rgba(37, 99, 235, 0.2); }
+
+        .intro-connection { padding: var(--intro-gap) 10% 50px 10%; text-align: center; }
+        .elite-spacer { padding: var(--elite-gap) 10% 0 10%; }
+        .reveal-left { opacity: 0; transform: translateX(-150px); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+
+        /* --- HERO --- */
+        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; position: relative; z-index: 1; }
+        .hero::after {
+            content: ''; position: absolute; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0) 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; filter: blur(40px);
+        }
+        h1 { font-family: 'Montserrat'; font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 800; margin: 0; letter-spacing: -2px; line-height: 1; }
+        .glow-text { color: var(--accent); text-shadow: 0 0 12px rgba(37, 99, 235, 0.25); }
+
+        /* --- PORTFOLIO TRACK --- */
+        .portfolio-container { width: 100%; overflow-x: auto; scrollbar-width: none; padding: 80px 0; cursor: grab; position: relative; z-index: 1; }
+        .portfolio-container::-webkit-scrollbar { display: none; }
+        .portfolio-flex-track { display: flex; padding: 0 10%; gap: 45px; width: max-content; }
+        .project-card { 
+            min-width: 340px; background: var(--card); border-radius: 40px; 
+            overflow: hidden; border: 1px solid var(--glass); display: flex; 
+            flex-direction: column; transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); flex-shrink: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;
+        }
+        .project-card:hover { transform: translateY(-15px) scale(1.02); border-color: var(--accent); }
+        .card-count { position: absolute; top: 20px; right: 25px; font-family: 'Montserrat'; font-weight: 800; font-size: 3.5rem; opacity: 0.1; color: var(--text); pointer-events: none; }
+        .project-img { height: 260px; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat'; font-weight: 800; color: white !important; font-size: 1.5rem; text-align: center; }
+        .p-text { padding: 25px; }
+        .p-text h3 { margin: 0; font-family: 'Montserrat'; font-weight: 700; font-size: 1.4rem; }
+
+        /* --- SHOWROOM & STATS --- */
+        .showroom { padding: 80px 10%; position: relative; z-index: 1; }
+        .showroom-item { margin-bottom: 120px; }
+        .showroom-img { height: 450px; border-radius: 45px; margin-bottom: 35px; background: var(--card); border: 1px solid var(--glass); display: flex; align-items: center; justify-content: center; font-family: 'Montserrat'; font-weight: 800; font-size: 2rem; }
+        .deep-dive-list { list-style: none; padding: 0; margin-top: 20px; }
+        .deep-dive-list li { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-weight: 600; font-size: 1.05rem; }
+        .deep-dive-list i { color: var(--accent); }
+
+        .stats-bar { background: var(--accent); color: white !important; padding: 100px 10%; display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 40px; position: relative; z-index: 1; }
+        .stat-number { font-size: 4.5rem; font-family: 'Montserrat'; font-weight: 800; display: block; line-height: 1; margin-bottom: 10px; }
+        .stat-label { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; }
+
+        /* --- CONTACT --- */
+        .contact-card { background: var(--card); max-width: 900px; margin: 80px auto; border-radius: 60px; padding: 80px 30px; text-align: center; border: 1px solid var(--glass); position: relative; z-index: 1; }
+        .social-hub { display: flex; justify-content: center; gap: 18px; margin-top: 45px; flex-wrap: wrap; }
+        .social-hub a { width: 75px; height: 75px; background: var(--bg); border-radius: 22px; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 2rem; transition: 0.4s; border: 1px solid var(--glass); text-decoration: none; }
+        .social-hub a:hover { background: var(--accent); color: white !important; transform: translateY(-8px) rotate(5deg); }
+
+        /* --- ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(60px); transition: 1.1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        footer { text-align: center; padding: 70px; opacity: 0.5; font-weight: 700; font-size: 0.85rem; letter-spacing: 4px; }
+
+        @media (max-width: 768px) { .portfolio-flex-track { padding: 0 5%; gap: 30px; } .project-card { min-width: 290px; } h1 { font-size: 3.5rem; } .showroom-img { height: 320px; } }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div id="loader">
+        <div class="loader-wrapper">
+            <img src="logo.png" alt="Logo" class="center-logo">
+            <div class="orbit-ring">
+                <div class="skill-icon s1"><i class="fa-solid fa-code"></i></div>
+                <div class="skill-icon s2"><i class="fa-solid fa-pen-nib"></i></div>
+                <div class="skill-icon s3"><i class="fa-solid fa-rocket"></i></div>
+                <div class="skill-icon s4"><i class="fa-solid fa-lightbulb"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav-logo">LEWI<span class="logo-accent">ALEX</span></div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn" style="background:var(--accent); color:white; border:none; border-radius:12px; padding:10px 15px; cursor:pointer;"><i class="fa-solid fa-moon"></i></button>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal">LEWI <span class="glow-text">ALEX</span></h1>
+        <p class="reveal" style="font-size: 1.1rem; opacity: 0.7; font-weight: 600; letter-spacing: 5px; margin-top: 15px;">CREATIVE TECHNOLOGIST // LEON CREATIVES</p>
+    </section>
+
+    <section class="intro-connection reveal-left">
+        <div style="max-width: 850px; margin: 0 auto;">
+            <h2 style="font-family: 'Montserrat'; font-size: 2.3rem; margin-bottom: 25px;">THE BALANCED ENGINEER</h2>
+            <p style="font-size: 1.2rem; line-height: 1.7; opacity: 0.9;">Code that breathes. Design that lasts. I bridge the gap between <span style="color: var(--accent); font-weight: 700;">artistic intent</span> and <span style="font-weight: 700;">technical precision</span>.</p>
+            <a href="#about-me" style="display: inline-block; margin-top: 30px; padding: 15px 40px; border: 2px solid var(--accent); color: var(--text); text-decoration: none; border-radius: 50px; font-weight: 700;">MORE ABOUT ME</a>
+        </div>
+    </section>
+
+    <section id="about-me" class="elite-spacer reveal">
+        <div style="max-width: 850px; margin: 0 auto; text-align: center;">
+            <h2 style="font-family: 'Montserrat'; font-size: 2.2rem; margin-bottom: 35px; letter-spacing: 3px;">PERSONAL CORE</h2>
+            <p style="font-size: 1.15rem; line-height: 2; opacity: 0.85;">I am Lewi Alex, a Creative Developer and the Founder of <strong>Leon Creatives</strong>. My journey is defined by a relentless drive to transform abstract ideas into high-performance digital realities.</p>
+            <a href="cv.pdf" download="Lewi_Alex_CV.pdf" style="display: inline-flex; align-items: center; gap: 12px; margin-top: 50px; padding: 18px 50px; background: var(--accent); color: white; text-decoration: none; border-radius: 50px; font-weight: 800;">
+                <i class="fa-solid fa-file-arrow-down"></i> DOWNLOAD CV
+            </a>
+        </div>
+    </section>
+
+    <section id="portfolio" class="elite-spacer">
+        <h2 class="reveal" style="text-align: center; font-size: 2.5rem; margin-bottom: 50px; letter-spacing: 2px;">SELECTED WORKS</h2>
+        <div class="portfolio-container" id="scrollContainer">
+            <div class="portfolio-flex-track">
+                <div class="project-card reveal">
+                    <div class="card-count">01</div>
+                    <div class="project-img" style="background: linear-gradient(45deg, #002147, #2563EB);">AWASH BANK</div>
+                    <div class="p-text"><h3>FINTECH UI</h3><p>Banking Redefined</p></div>
+                </div>
+                <div class="project-card reveal">
+                    <div class="card-count">02</div>
+                    <div class="project-img" style="background: linear-gradient(45deg, #e61c24, #1e293b);">SAFARICOM</div>
+                    <div class="p-text"><h3>MOTION</h3><p>5G Digital Hub</p></div>
+                </div>
+                <div class="project-card reveal">
+                    <div class="card-count">03</div>
+                    <div class="project-img" style="background: linear-gradient(45deg, #283618, #606c38);">AIRLINES</div>
+                    <div class="p-text"><h3>BRANDING</h3><p>Global Identity</p></div>
+                </div>
+                <div class="project-card reveal">
+                    <div class="card-count">04</div>
+                    <div class="project-img" style="background: linear-gradient(45deg, #4b2c20, #8d5524);">COFFEE CO.</div>
+                    <div class="p-text"><h3>E-COMM</h3><p>B2B Portal</p></div>
+                </div>
+                <div class="project-card reveal" style="background: var(--accent); cursor: pointer;" onclick="window.open('https://linkedin.com', '_blank')">
+                    <div class="project-img" style="flex-direction: column;">
+                        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <span style="font-size: 1.5rem;">EXPLORE ALL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showroom">
+        <h2 class="reveal" style="text-align: center; font-size: 2.5rem; margin-bottom: 60px;">DEEP DIVE</h2>
+        <div class="showroom-item reveal">
+            <div class="showroom-img" style="background: linear-gradient(135deg, #0f172a, #2563EB);">[ CASE: AWASH ]</div>
+            <h3>DIGITAL EVOLUTION</h3>
+            <ul class="deep-dive-list">
+                <li><i class="fa-solid fa-circle-check"></i> Enterprise-grade security architecture</li>
+                <li><i class="fa-solid fa-circle-check"></i> High-conversion mobile user flows</li>
+                <li><i class="fa-solid fa-circle-check"></i> Modern fintech design standards</li>
+            </ul>
+        </div>
+        <div class="showroom-item reveal">
+            <div class="showroom-img" style="background: linear-gradient(135deg, #1e293b, #e61c24);">[ CASE: SAFARICOM ]</div>
+            <h3>NATIONWIDE 5G</h3>
+            <ul class="deep-dive-list">
+                <li><i class="fa-solid fa-bolt"></i> Interactive Kinetic Typography</li>
+                <li><i class="fa-solid fa-bolt"></i> Multi-channel content strategy</li>
+                <li><i class="fa-solid fa-bolt"></i> Strategic digital rollout</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="stats-bar reveal" id="statsSection">
+        <div><span class="stat-number" data-target="12">0</span><span class="stat-label">PROJECTS</span></div>
+        <div><span class="stat-number" data-target="100">0</span><span class="stat-label">% SUCCESS</span></div>
+        <div><span class="stat-number" data-target="2026">0</span><span class="stat-label">INNOVATION</span></div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-card reveal">
+            <img src="logo.png" alt="Leon Logo" style="height: 70px; margin-bottom: 30px;">
+            <h2 style="font-size: 3.5rem; margin: 0;">LET'S WORK</h2>
+            <p style="font-size: 1.3rem; opacity: 0.7; font-weight: 600; margin-top: 10px;">Available for high-impact collaborations.</p>
+            <div class="social-hub">
+                <a href="tel:+251920552779"><i class="fa-solid fa-phone"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>&copy; 2026 LEWI ALEX // LEON CREATIVES</footer>
+
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => { document.getElementById("loader").classList.add("loader-hidden"); }, 3000);
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            document.querySelector('#themeBtn i').className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        }
+
+        const container = document.getElementById('scrollContainer');
+        let isPaused = false;
+        setInterval(() => { if (!isPaused) { container.scrollLeft += 0.7; if (container.scrollLeft >= (container.scrollWidth - container.clientWidth)) container.scrollLeft = 0; } }, 30);
+        container.addEventListener('mousedown', () => isPaused = true);
+        container.addEventListener('mouseup', () => isPaused = false);
+
+        const runCounter = (el) => {
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const update = () => {
+                const inc = target / 60;
+                if (count < target) { count += inc; el.innerText = Math.ceil(count); setTimeout(update, 25); }
+                else { el.innerText = target + (target === 12 ? "+" : ""); }
+            };
+            update();
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'statsSection') {
+                        entry.target.querySelectorAll('.stat-number').forEach(num => { num.innerText = "0"; runCounter(num); });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal, .reveal-left, #statsSection').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
